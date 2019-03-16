@@ -1,0 +1,162 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=GBK"/><style> 
+.div-a{ float:left;width:50%;border:5px solid #F00} 
+.div-b{ float:left;width:48%;border:5px solid #000} 
+.divcss5{font-size:24px;}
+</style> 
+		<script src="sha256.js"></script>
+		<script>
+function generatePaymentHash()
+{
+var eslipNum=myform.eslipNum.value;
+var issueDate=myform.issueDate.value;
+var pin=myform.pin.value;
+var totalAmount=myform.totalAmount.value;
+var means=myform.means.value;
+var bankTeller=myform.bankTeller.value;
+var payRef=myform.payRef.value;
+var pg=myform.pg.value;
+var loginId=myform.loginId.value;
+var plainText=eslipNum+""+issueDate+""+pin+""+totalAmount+""+bankTeller+""+payRef+""+pg+""+loginId;
+console.log(plainText);
+var hash = CryptoJS.SHA256(plainText);
+console.log(hash+"");
+var rstv=hash+"";
+result.rst.value=rstv;
+alert(hash);
+
+var v1="<CCRSPAYMENT><hash>"+rstv;
+var v2="</hash><PAYMENT><PAYMENTHEADER>";
+var v3="<SlipPaymentCode>12</SlipPaymentCode><BankCode>01</BankCode><BranchCode>01091</BranchCode>";
+var v4="<BankTellerId>"+bankTeller+"</BankTellerId>";
+var v5="<EslipNumber>"+eslipNum+"</EslipNumber>";
+var v6="<PaymentReference>"+payRef+"</PaymentReference>";
+var v7="<DateOfCollection>"+issueDate+"</DateOfCollection>";
+var v8="<Taxpayerpin>"+pin+"</Taxpayerpin>";
+var v9="<TotalAmount>"+totalAmount+"</TotalAmount>";
+var v10="<MeansOfPayment>"+means+"</MeansOfPayment>";
+var v11="<DateTransmitionBank>2017-11-15T10:10:26</DateTransmitionBank>";
+var v12="</PAYMENTHEADER>";
+
+var tb = document.getElementById("tbh");
+var rows = tb.rows;
+var dabianl="";
+for (var i = 1; i < rows.length; i++) {
+	var taxcode="";var taxamount="";
+	var zuichang="";
+	var input = rows[i].getElementsByTagName("input");
+	for (var j = 0; j < input.length; j++) {
+		if (input[j].type == 'text') {
+			if(j==0){
+			zuichang=zuichang+"<PAYMENTDETAILS><TaxCode>"+input[j].value+"</TaxCode><TaxPeriod></TaxPeriod>";
+			}
+			if(j==1){
+			zuichang=zuichang+"<AmountPerTax>"+input[j].value+"</AmountPerTax></PAYMENTDETAILS>";
+			dabianl=dabianl+zuichang;
+			}
+			
+		}
+	}
+}
+dabianl=dabianl+"";
+console.log(dabianl);
+var v13=dabianl;
+var v14="</PAYMENT></CCRSPAYMENT>";
+
+var tttss=v1+v2+v3+v4+v5+v6+v7+v8+v9+v10+v11+v12+v13+v14+"";
+result.rst1.value=tttss;
+console.log(v1+v2+v3+v4+v5+v6+v7+v8+v9+v10+v11+v12+v13);
+
+
+}
+</script>
+	</head>
+	<body  class="divcss5"><div><div  class="div-a">
+	<form name="myform">
+		<table  class="divcss5">
+			<tr><td>EslipNumber</td><td><input type="text" name="eslipNum"></td></tr>
+			<tr><td>Ct18_issue_date</td><td><input type="text" name="issueDate"></td></tr>
+			<tr><td>Taxpayerpin</td><td><input type="text" name="pin"></td></tr>
+			<tr><td>TotalAmount</td><td><input type="text" name="totalAmount"></td></tr>
+			<tr><td>MeansOfPayment</td><td><input type="text" name="means" placeholder="CASH,CHEQUE,BOTH,OTHERS...."></td></tr>
+			<tr><td>BankTellerId</td><td><input type="text" name="bankTeller"></td></tr>
+			<tr><td>PaymentReference</td><td><input type="text" name="payRef"></td></tr>
+			<tr><td>PG</td><td><input type="text" name="pg" value="PG"></td></tr>
+			<tr><td>loginid</td><td><input type="text" name="loginId" value="KRA@PG"></td></tr>
+			<tr><td>Generate Button</td><td><input type="button" name="gb" onclick="generatePaymentHash()" value="Click Here"></td></tr>
+		</table>
+	</form>
+	<form name="result1"><fieldset><legend>Please input tax amount one by one</legend>
+		<table id='tbh'>
+			<tr><td>TaxCode</td><td>AmountPerTax</td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+			<tr><td><input type="text" name="taxCode"></td><td><input type="text" name="amountTax"></td></tr>
+		</table></fieldset>
+	</form>
+	<form name="result">
+		<table>
+			<tr>
+			<td>type</td>
+			<td>
+			<textarea rows="5" cols="60" name="rst">
+			</textarea>
+			</td>
+			</tr>
+			<tr>
+			<td>xml header</td>
+			<td>
+			<textarea rows="15" cols="60" name="rst1">
+			</textarea>
+			</td>
+			</tr>
+		</table>
+	</form></div>
+	<div  class="div-b"><form name="gy"><fieldset><legend>Please refer to this sql by changing the eslip number[CT18_EXTERNAL_REFERENCE]</legend>
+	<textarea width="100%" rows="20" cols="60" name="rseeet" style="font-style: italic;font-size:15px;font-weight:bold">select tt18.CR01_internal_id,to_char(tt18.CT18_ISSUING_DATE,'YYYY-MM-DD"T"HH24:MI:SS'),
+tt18.CT18_TOTAL_AMOUNT,tt18.CT18_INSTRUCTION_ID,tr01.cr01_tin_id,tt19.CSTD_TAX_TYPE,tt19.CT19_AMOUNT,
+tt19.CSTD_LIABILITY_TYPE from REF_TAC.TT18_PAYMENT_INSTRUCTIONS tt18,REF_REG.TR01_TAXPAYER tr01,
+REF_TAC.TT19_PAYMENT_DETAILS tt19 where tt18.cr01_internal_id=tr01.cr01_internal_id and
+tt18.CT18_INSTRUCTION_ID=tt19.CT18_INSTRUCTION_ID and tt18.CT18_EXTERNAL_REFERENCE='1020180000000370';
+	</textarea><form>
+	</div>
+	</div>
+	<div>
+	
+	</div>
+	</body>
+</html>
